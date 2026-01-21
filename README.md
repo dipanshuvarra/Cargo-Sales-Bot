@@ -262,9 +262,6 @@ OLLAMA_MODEL = "mistral"  # or llama2, codellama, etc.
 - Ensure backend is running on port 8000
 - Check CORS settings if using different domain
 
-## License
-
-MIT License - Feel free to modify and extend!
 
 ## Future Enhancements
 
