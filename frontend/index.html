@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Cargo Sales Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <path d="M20 5L35 15V25L20 35L5 25V15L20 5Z" stroke="url(#gradient)" stroke-width="2" fill="none"/>
+                    <path d="M20 15L30 20L20 25L10 20L20 15Z" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="5" y1="5" x2="35" y2="35">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>Air Cargo Assistant</h1>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span>
+                <span id="connection-status">Connected</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Conversation Panel -->
+            <div class="conversation-panel">
+                <div class="conversation-header">
+                    <h2>Conversation</h2>
+                    <button id="clear-chat" class="btn-icon" title="Clear conversation">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M6 2L14 2C15.1 2 16 2.9 16 4L16 16C16 17.1 15.1 18 14 18L6 18C4.9 18 4 17.1 4 16L4 4C4 2.9 4.9 2 6 2ZM8 6L8 14L12 14L12 6L8 6Z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="conversation-history" class="conversation-history">
+                    <div class="message assistant">
+                        <div class="message-content">
+                            <p>👋 Hello! I'm your air cargo booking assistant. I can help you:</p>
+                            <ul>
+                                <li>Get price quotes</li>
+                                <li>Create bookings</li>
+                                <li>Track shipments</li>
+                                <li>Cancel bookings</li>
+                            </ul>
+                            <p>Try saying: <em>"I need a quote from New York to London for 5 tonnes of general cargo"</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <div class="input-container">
+                        <input 
+                            type="text" 
+                            id="text-input" 
+                            placeholder="Type your message or use voice..."
+                            autocomplete="off"
+                        />
+                        <button id="voice-btn" class="btn-voice" title="Click to speak">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 14C13.66 14 15 12.66 15 11V5C15 3.34 13.66 2 12 2C10.34 2 9 3.34 9 5V11C9 12.66 10.34 14 12 14Z"/>
+                                <path d="M17 11C17 14.31 14.31 17 11 17C7.69 17 5 14.31 5 11H3C3 15.42 6.58 19 11 19V22H13V19C17.42 19 21 15.42 21 11H19C19 14.31 16.31 17 13 17C9.69 17 7 14.31 7 11H17Z" opacity="0.5"/>
+                            </svg>
+                        </button>
+                        <button id="send-btn" class="btn-send" title="Send message">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M2.01 21L23 12L2.01 3L2 10L17 12L2 14L2.01 21Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="voice-indicator" class="voice-indicator hidden">
+                        <div class="pulse"></div>
+                        <span>Listening...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bookings Panel -->
+            <div class="bookings-panel">
+                <div class="panel-header">
+                    <h2>Recent Bookings</h2>
+                    <button id="refresh-bookings" class="btn-icon" title="Refresh bookings">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3V1L7 4L10 7V5C13.31 5 16 7.69 16 11C16 12.01 15.75 12.97 15.3 13.8L16.74 15.24C17.55 14.03 18 12.57 18 11C18 6.58 14.42 3 10 3ZM10 17C6.69 17 4 14.31 4 11C4 9.99 4.25 9.03 4.7 8.2L3.26 6.76C2.45 7.97 2 9.43 2 11C2 15.42 5.58 19 10 19V21L13 18L10 15V17Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="bookings-list" class="bookings-list">
+                    <div class="empty-state">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" opacity="0.3">
+                            <path d="M30 10L50 20V40L30 50L10 40V20L30 10Z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <p>No bookings yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmation-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Confirmation Required</h3>
+                <p id="confirmation-message"></p>
+                <div class="modal-actions">
+                    <button id="confirm-yes" class="btn btn-primary">Yes, Proceed</button>
+                    <button id="confirm-no" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
